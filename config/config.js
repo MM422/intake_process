@@ -108,6 +108,12 @@ export default {
               component: './Welcome',
             },
             {
+              path: '/intake',
+              name: 'intake',
+              icon: 'smile',
+              component: './intake/IntakeForm',
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',
