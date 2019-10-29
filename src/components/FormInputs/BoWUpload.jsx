@@ -2,8 +2,17 @@ import React, {Component} from 'react';
 import {Form, Upload, Button, Icon} from 'antd';
 
 class BoWUpload extends Component {
+    state = {
+        fileList: this.props.initialValue ? [{
+            uid: '-1',
+            name: this.props.initialValue,
+            status: 'done',
+        }] : []
+    };
+
     normFile = e => {
         if (e && e.fileList && e.fileList.length > 0) {
+            this.setState((prevState) => ({fileList: [e.file]}));
             return e.fileList[e.fileList.length - 1].name;
         } else {
             return undefined;
@@ -19,7 +28,7 @@ class BoWUpload extends Component {
                     valuePropName: 'fileList[fileList.length - 1]',
                     getValueFromEvent: this.normFile,
                 })(
-                    <Upload showUploadList={{showPreviewIcon: true, showRemoveIcon: false, showDownloadIcon: false}}>
+                    <Upload showUploadList={{showPreviewIcon: true, showRemoveIcon: false, showDownloadIcon: false}} fileList={this.state.fileList}>
                         <Button>
                             <Icon type="upload" /> Upload
                         </Button>
