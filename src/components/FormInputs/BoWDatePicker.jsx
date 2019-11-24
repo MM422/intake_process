@@ -9,7 +9,7 @@ const BoWDatePicker = (props) => {
             {getFieldDecorator(attributeName, {
                 rules,
                 initialValue,
-            })(<DatePicker placeholder={placeholder} disabled={disabled} style={{ width: "100%" }}/>)}
+            })(<DatePicker allowClear={false} placeholder={placeholder} disabled={disabled} style={{ width: "100%" }}/>)}
         </Form.Item>
     );
 };

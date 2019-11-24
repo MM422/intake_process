@@ -1,11 +1,53 @@
 import React, { Component } from 'react';
-import { Form, Button } from 'antd';
+import {Form, Button, Descriptions} from 'antd';
 import BoWInput from "@/components/FormInputs/BoWInput";
 import BoWSelect from "@/components/FormInputs/BoWSelect";
 import BoWDatePicker from "@/components/FormInputs/BoWDatePicker";
 import BoWUpload from "@/components/FormInputs/BoWUpload";
-
+import PICIntakeReviewPage from "@/components/FormInputs/PICIntakeReviewPage";
 const moment = require("moment");
+
+const mockData = {
+    RequesterName: 'Max Mu',
+    Email: 'max.mu@td.com',
+    LOBPIC: 'EDPP',
+    PICDate: '2019-11-11',
+    Presenter: [{
+        ACF2: 'MUM2',
+        Name: 'Max Mu',
+    },{
+        ACF2: 'LEESEU3',
+        Name: 'Seunghan Lee',
+    }],
+    Financial: [{
+        Cash: 10000,
+        PL: 1000,
+    },{
+        Cash: 20000,
+        PL: 2000,
+    }],
+    ClarityProjectID: '00096662',
+    TrancheNumber: '0.0',
+    ClarityProjectName: 'Book of Work Test project for PIC Intake Review Page',
+    Methodology: 'Agile',
+    Goal: 'Project Goal Placeholder',
+    Tier: 4,
+    CurrentPhase: 'Active',
+    PortfolioDirectorName: 'Jarrod',
+    BusinessOwner: 'Jarrod',
+    TargetFinalImplementationDate: '2019-11-11',
+    CurrentTrancheRequest: 'AVS',
+    Reason: 'This is a test purely for the PIC Intake',
+    FundingAskCashBase : 100000,
+    FundingAskCashContingency: 200000,
+    FundingAskCashTotal: 300000,
+    CurrentTrancheAskStartDate: '2019-11-01',
+    CurrentTrancheAskEndDate: '2019-12-01',
+    InOutOfFiscalPrioritizedPlan: 'In',
+    TotalOneTimeCostCash: 100000,
+    TPI: 1000000,
+    TotalSpendToDateCash: 20000,
+};
 
 const formItemLayout = {
     labelCol: {
@@ -37,6 +79,18 @@ class IntakeForm extends Component {
         FinalImplementationDateDisabled: false,
     };
 
+    componentDidMount() {
+        const { form } = this.props;
+
+        // Check Tier value:
+        const tier = form.getFieldValue('Tier');
+        if(tier.label === '2') {
+            this.setState({
+                FinalImplementationDateDisabled: true,
+            })
+        }
+    }
+
     handleSelectChange = (changedValue) => {
         const { form } = this.props;
         if(changedValue.label === '2') {
@@ -63,7 +117,7 @@ class IntakeForm extends Component {
                     form={this.props.form}
                     label="Requestor Name"
                     attributeName="RequestorName"
-                    rules={[]}
+                    rules={[{required: true, message: 'Requestor is required!'}]}
                     placeholder="Please input the requestor name"
                     disabled={false}
                 />
@@ -96,7 +150,7 @@ class IntakeForm extends Component {
                     placeholder="Please submit your deck"
                     disabled={false}
                 />
-
+                <PICIntakeReviewPage PICIntakeDetail={mockData}/>
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit">
                         Submit
@@ -107,6 +161,22 @@ class IntakeForm extends Component {
     }
 }
 
-const WrappedIntakeForm = Form.create("Intake")(IntakeForm);
+const WrappedIntakeForm = Form.create({
+    name: 'intake_form_experiment',
+    mapPropsToFields: (props) => {
+        return props.initialValues ? {
+            RequestorName: Form.createFormField({
+                value: props.initialValues.RequestorName,
+            }),
+            Tier: Form.createFormField({
+                value: props.initialValues.Tier,
+            }),
+        }: {};
+    },
+    onValuesChange: (props, changedValues, allValues) => {
+        console.log(changedValues);
+        console.log(allValues);
+    }
+})(IntakeForm);
 
 export default WrappedIntakeForm;

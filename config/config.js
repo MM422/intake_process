@@ -114,6 +114,18 @@ export default {
               component: './intake/IntakeForm',
             },
             {
+              path: '/intake_initial_value',
+              name: 'intake_initial_value',
+              icon: 'smile',
+              component: './intake/IntakeFormContainer',
+            },
+            {
+              path: '/control_center',
+              name: 'control_center',
+              icon: 'smile',
+              component: './intake/ControlCenter',
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',

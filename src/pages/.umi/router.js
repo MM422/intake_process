@@ -57,6 +57,20 @@ const routes = [
             exact: true,
           },
           {
+            path: '/intake_initial_value',
+            name: 'intake_initial_value',
+            icon: 'smile',
+            component: require('../intake/IntakeFormContainer').default,
+            exact: true,
+          },
+          {
+            path: '/control_center',
+            name: 'control_center',
+            icon: 'smile',
+            component: require('../intake/ControlCenter').default,
+            exact: true,
+          },
+          {
             path: '/admin',
             name: 'admin',
             icon: 'crown',
